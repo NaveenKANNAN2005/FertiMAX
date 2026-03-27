@@ -1,5 +1,14 @@
 // API Configuration
-const API_BASE_URL =import.meta.env.VITE_API_BASE_URL || "https://fertimax.onrender.com/api";
+const RENDER_API_BASE_URL = "https://fertimax.onrender.com/api";
+const envApiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const hasLoopbackApi = /localhost|127\.0\.0\.1/.test(envApiBaseUrl || "");
+const isHostedFrontend =
+  typeof window !== "undefined" && !/localhost|127\.0\.0\.1/.test(window.location.hostname);
+
+const API_BASE_URL =
+  envApiBaseUrl && !(isHostedFrontend && hasLoopbackApi)
+    ? envApiBaseUrl
+    : RENDER_API_BASE_URL;
 
 export const API_ENDPOINTS = {
   // Products

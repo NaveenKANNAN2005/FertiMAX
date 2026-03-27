@@ -82,7 +82,7 @@ export const GoogleOAuthWrapper = ({ children, clientId }) => {
   const resolvedClientId = clientId || import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
   if (!resolvedClientId) {
-    return children;
+    return null;
   }
 
   return (
