@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { ArrowRight, Leaf, Sparkles } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
-import { GoogleLoginButton, GoogleOAuthWrapper } from "@/components/GoogleAuth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -202,18 +201,6 @@ const Login = () => {
               {loading ? "Logging in..." : "Log In"}
             </Button>
           </form>
-
-          <div className="my-7 flex items-center">
-            <div className="h-px flex-1 bg-border" />
-            <span className="px-3 text-sm text-muted-foreground">OR</span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-
-          <div className="mb-6 flex justify-center">
-            <GoogleOAuthWrapper clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-              <GoogleLoginButton onSuccess={() => navigate("/dashboard")} />
-            </GoogleOAuthWrapper>
-          </div>
 
           <div className="rounded-[1.5rem] border border-leaf/20 bg-leaf/10 p-5">
             <p className="text-center text-sm text-muted-foreground">Want to explore quickly?</p>

@@ -4,7 +4,6 @@ import { Sprout, Sparkles } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { GoogleLoginButton, GoogleOAuthWrapper } from "@/components/GoogleAuth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -197,18 +196,6 @@ const Register = () => {
               {loading ? "Creating Account..." : "Sign Up"}
             </Button>
           </form>
-
-          <div className="my-7 flex items-center">
-            <div className="h-px flex-1 bg-border" />
-            <span className="px-3 text-sm text-muted-foreground">OR</span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-
-          <div className="mb-6 flex justify-center">
-            <GoogleOAuthWrapper clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-              <GoogleLoginButton onSuccess={() => navigate("/dashboard")} />
-            </GoogleOAuthWrapper>
-          </div>
 
           <p className="text-center text-gray-600">
             Already have an account?{" "}

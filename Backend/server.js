@@ -14,7 +14,6 @@ import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import adminProductRoutes from "./routes/adminProductRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
-import oauthRoutes from "./routes/oauthRoutes.js";
 
 dotenv.config();
 
@@ -40,7 +39,6 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/admin", adminProductRoutes);
 app.use("/api/reviews", reviewRoutes);
-app.use("/api/auth", oauthRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ success: true, message: "Server is running" });
