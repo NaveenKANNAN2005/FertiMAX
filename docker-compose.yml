@@ -1,0 +1,90 @@
+version: "3.8"
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:latest
+    container_name: fertimax-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: fertimax
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - fertimax-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: fertimax-backend
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      MONGODB_URI: mongodb://admin:admin@mongodb:27017/fertimax
+      NODE_ENV: development
+      JWT_SECRET: fertimax_jwt_secret_key_change_in_production
+      JWT_EXPIRE: 7d
+      FRONTEND_URL: http://localhost:8080
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+    networks:
+      - fertimax-network
+    command: npm run dev
+
+  # Frontend Application
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: fertimax-frontend
+    ports:
+      - "8080:8080"
+    environment:
+      VITE_API_BASE_URL: http://localhost:5000/api
+    depends_on:
+      - backend
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    networks:
+      - fertimax-network
+    command: npm run dev
+
+  # MongoDB GUI (Optional)
+  mongo-express:
+    image: mongo-express:latest
+    container_name: fertimax-mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin@mongodb:27017
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+    depends_on:
+      - mongodb
+    networks:
+      - fertimax-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  fertimax-network:
+    driver: bridge
