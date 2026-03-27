@@ -14,8 +14,8 @@ An AI-powered fertilizer recommendation backend for modern agriculture. Built wi
 ## 📋 Prerequisites
 
 - Node.js 16+ and npm
-- MongoDB (running locally or MongoDB Atlas connection)
-- MongoDB Compass (for database visualization) - Optional but recommended
+- MongoDB Atlas connection
+- MongoDB Compass (for Atlas database visualization) - Optional
 
 ## 🛠️ Installation
 
@@ -31,31 +31,15 @@ Create a `.env` file in the Backend folder:
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/fertimax
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/fertimax?retryWrites=true&w=majority&appName=<cluster-name>
 NODE_ENV=development
 JWT_SECRET=your_jwt_secret_key_change_in_production
 JWT_EXPIRE=7d
 ```
 
-**For MongoDB Atlas (Cloud):**
+### 3. MongoDB Atlas
 
-```env
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/fertimax
-```
-
-### 3. Start MongoDB
-
-**Local MongoDB:**
-
-```bash
-# Windows:
-mongod
-
-# Mac/Linux:
-brew services start mongodb-community
-```
-
-**Or use MongoDB Atlas (no local installation needed)**
+Create your cluster and database user in Atlas, then paste the SRV URI into `.env`.
 
 ## 🏃 Running the Server
 
@@ -117,8 +101,8 @@ Download from: https://www.mongodb.com/products/compass
 
 ### 2. Connect to Database
 
-- **Local**: `mongodb://localhost:27017`
-- **Atlas**: Use your connection string from MongoDB Atlas
+- Paste your Atlas SRV URI in Compass
+- Or use the same SRV URI in `.env` as `MONGODB_URI`
 
 ### 3. View Collections
 
@@ -205,10 +189,9 @@ Backend/
 
 **MongoDB Connection Error:**
 
-- Ensure MongoDB is running
-- Check connection string in `.env`
-- For local: `mongodb://localhost:27017/fertimax`
-- For Atlas: Make sure IP is whitelisted
+- Check Atlas connection string in `.env`
+- Ensure Atlas IP access includes your server/client IP
+- Verify database user credentials and password encoding
 
 **Port Already in Use:**
 

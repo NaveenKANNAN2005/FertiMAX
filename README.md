@@ -110,8 +110,8 @@ bloom-ai-advisor-94-main/
 Before you start, make sure you have:
 
 - **Node.js** 16+ ([Download](https://nodejs.org/))
-- **MongoDB** ([Local](https://www.mongodb.com/try/download/community) or [Atlas](https://www.mongodb.com/cloud/atlas))
-- **MongoDB Compass** (Optional but recommended)
+- **MongoDB Atlas** ([Create Cluster](https://www.mongodb.com/cloud/atlas))
+- **MongoDB Compass** (Optional, for viewing Atlas data)
 - **Docker** & **Docker Compose** (Optional for containerization)
 - **Git** for version control
 
@@ -135,7 +135,7 @@ Create `.env` file:
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/fertimax
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/fertimax?retryWrites=true&w=majority&appName=<cluster-name>
 NODE_ENV=development
 JWT_SECRET=your_secret_key_here
 JWT_EXPIRE=7d
@@ -265,16 +265,16 @@ PUT    /reviews/:id           - Update review
 DELETE /reviews/:id           - Delete review
 ```
 
-## 🗄️ Database Setup with MongoDB Compass
+## 🗄️ Database Setup (MongoDB Atlas)
 
-### 1. Install MongoDB Compass
+### 1. Create MongoDB Atlas Cluster
 
-Download from: https://www.mongodb.com/products/compass
+Create a cluster at: https://www.mongodb.com/cloud/atlas
 
 ### 2. Connect to Database
 
-- **Local**: `mongodb://localhost:27017`
-- **Atlas**: Use your connection string
+- Use your Atlas SRV connection string in `MONGODB_URI`
+- Optional: connect MongoDB Compass using the same SRV string
 
 ### 3. Collections
 
@@ -410,7 +410,7 @@ npm install
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/fertimax
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/fertimax?retryWrites=true&w=majority&appName=<cluster-name>
 NODE_ENV=development
 JWT_SECRET=your_jwt_secret_key
 JWT_EXPIRE=7d
